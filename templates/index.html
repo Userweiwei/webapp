@@ -1,222 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Recommendation Management System</title>
+    <title>Book Recommendation Manager</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        /* Custom styles */
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .app-container {
-            max-width: 1200px;
-            margin: 30px auto;
-            background-color: white;
+        .form-card {
+            background: #f8f9fa;
             border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
         }
-
-        .header-section {
-            padding: 30px;
-            border-bottom: 1px solid #e9ecef;
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-
-        .form-section {
-            padding: 30px;
+        
+        .page-title {
+            color: #2c3e50;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin: 2rem 0;
         }
-
-        .table-section {
-            padding: 30px;
-        }
-
-        .btn-add-book {
-            background-color: #4CAF50; /* Green button */
-            border: none;
-            padding: 12px 28px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-add-book:hover {
-            background-color: #45a049;
-        }
-
-        .book-table th {
-            background-color: #f0f0f0;
+        
+        .form-label {
             font-weight: 500;
-        }
-
-        .action-btn {
-            margin-left: 8px;
-            font-size: 0.9em;
+            color: #4a5568;
         }
     </style>
 </head>
-<body>
-    <div class="app-container">
-        <!-- Header -->
-        <div class="header-section text-center">
-            <h1 class="mb-4" style="color: #2c3e50;">📚 Book Recommendation Management System</h1>
-            <p class="text-muted">Easily manage your book recommendation list</p >
-        </div>
 
-        <!-- Form Section -->
-        <div class="form-section">
-            <form id="bookForm">
-                <div class="mb-4">
-                    <label for="title" class="form-label fw-bold">Book Title</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-book"></i></span>
-                        <input type="text" class="form-control rounded-3" id="title" placeholder="Enter book title" required>
-                    </div>
-                </div>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="page-title text-center">Book Recommendation Manager</h1>
 
-                <div class="mb-4">
-                    <label for="author" class="form-label fw-bold">Author</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" class="form-control rounded-3" id="author" placeholder="Enter author name" required>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="description" class="form-label fw-bold">Description</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
-                        <textarea class="form-control rounded-3" id="description" rows="4" placeholder="Enter book description" required></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-add-book mt-3">
-                    <i class="bi bi-plus-lg me-2"></i> Add Book
-                </button>
-            </form>
-        </div>
-
-        <!-- Table Section -->
-        <div class="table-section">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="text-primary">📖 Book List</h3>
-                <div class="input-group" style="max-width: 300px;">
-                    <input type="text" class="form-control rounded-3" id="searchInput" placeholder="Search by title...">
-                    <button class="btn btn-light" type="button" id="searchBtn">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
+        <div class="form-card">
+            <div class="mb-4">
+                <label for="title" class="form-label">Book Title</label>
+                <input type="text" class="form-control form-control-lg" id="title" placeholder="Enter book title">
             </div>
+            <div class="mb-4">
+                <label for="author" class="form-label">Author</label>
+                <input type="text" class="form-control" id="author" placeholder="Enter author name">
+            </div>
+            <div class="mb-4">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Enter book description"></textarea>
+            </div>
+            <button class="btn btn-primary w-100 py-2" id="addBookBtn">
+                Add Book
+            </button>
+        </div>
 
-            <table class="table table-hover book-table">
-                <thead>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
                     <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Description</th>
-                        <th>Actions</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col">Description</th>
                     </tr>
                 </thead>
-                <tbody id="bookTableBody">
+                <tbody id="bookTableBody" class="table-group-divider">
+                    <!-- Data will be populated here -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Icon Library -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Load books
+            // Load initial book list
             loadBooks();
 
-            // Form submission handler
-            $('#bookForm').submit(function(e) {
-                e.preventDefault();
-                const title = $('#title').val();
-                const author = $('#author').val();
-                const description = $('#description').val();
+            // Add book button handler
+            $('#addBookBtn').click(function() {
+                const title = $('#title').val().trim();
+                const author = $('#author').val().trim();
+                const description = $('#description').val().trim();
 
-                if (title && author && description) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/books',
-                        contentType: 'application/json',
-                        data: JSON.stringify({ title, author, description }),
-                        success: function(response) {
-                            showToast('success', 'Book added successfully!');
-                            loadBooks();
-                            this.reset(); // Reset form
-                        },
-                        error: function(error) {
-                            showToast('danger', 'Failed to add book, please try again');
-                            console.error('Error:', error);
-                        }
-                    });
+                if (!title) {
+                    alert('Please enter a book title');
+                    return;
                 }
-            });
 
-            // Search function
-            $('#searchInput').on('input', function() {
-                const searchTerm = $(this).val().toLowerCase();
-                $('#bookTableBody tr').each(function() {
-                    const title = $(this).find('td:eq(1)').text().toLowerCase();
-                    $(this).toggle(title.includes(searchTerm));
+                $(this).prop('disabled', true).html(`
+                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                    Adding...
+                `);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/books',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        title: title,
+                        author: author,
+                        description: description
+                    }),
+                    success: function(response) {
+                        loadBooks();
+                        $('#title, #author, #description').val('');
+                    },
+                    error: function(xhr) {
+                        alert('Error: ' + (xhr.responseJSON?.error || 'Failed to add book'));
+                    },
+                    complete: function() {
+                        $('#addBookBtn').prop('disabled', false).text('Add Book');
+                    }
                 });
             });
 
-            // Load books list
+            // Load books function
             function loadBooks() {
                 $.ajax({
                     type: 'GET',
                     url: '/books',
                     success: function(response) {
-                        const tbody = $('#bookTableBody');
-                        tbody.empty();
-
-                        response.forEach((book, index) => {
-                            const row = $('<tr>');
-                            row.append($('<td>').text(index + 1)); // Temporary ID, use database ID in real scenario
-                            row.append($('<td>').text(book.title));
-                            row.append($('<td>').text(book.author));
-                            row.append($('<td>').text(book.description));
-
-                            // Actions column (edit/delete buttons)
-                            const actions = $('<td>');
-                            actions.html(`
-                                <button class="btn btn-sm btn-primary action-btn" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger action-btn" title="Delete">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                        const $tbody = $('#bookTableBody').empty();
+                        response.forEach(book => {
+                            $tbody.append(`
+                                <tr>
+                                    <td class="fw-semibold">${book.id}</td>
+                                    <td>${book.title}</td>
+                                    <td>${book.author || 'N/A'}</td>
+                                    <td class="text-muted">${book.description || '-'}</td>
+                                </tr>
                             `);
-                            row.append(actions);
-
-                            tbody.append(row);
                         });
                     },
-                    error: function(error) {
-                        showToast('danger', 'Failed to load books list');
-                        console.error('Error:', error);
+                    error: function(xhr) {
+                        alert('Error: Failed to load books');
                     }
                 });
-            }
-
-            // Toast notification
-            function showToast(type, message) {
-                const toastDiv = $('<div>').attr('role', 'alert').addClass(`toast alert alert-${type} alert-dismissible fade show`).html(`
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                });
-                toastDiv.appendTo('body').fadeIn().delay(3000).fadeOut();
             }
         });
     </script>
 </body>
+
 </html>
