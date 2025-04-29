@@ -4,7 +4,7 @@ from config import DB_CONFIG
 
 app = Flask(__name__)
 
-# 创建数据库表
+# Create Database
 def create_table():
     mydb = mysql.connector.connect(**DB_CONFIG)
     mycursor = mydb.cursor()
@@ -20,7 +20,7 @@ def create_table():
     mycursor.close()
     mydb.close()
 
-# 添加推荐书籍
+# Add Books
 @app.route('/books', methods=['POST'])
 def add_book():
     data = request.get_json()
@@ -38,7 +38,7 @@ def add_book():
     mydb.close()
     return jsonify({"id": book_id, "title": title, "author": author, "description": description}), 201
 
-# 获取所有推荐书籍
+# Get Book Lists
 @app.route('/books', methods=['GET'])
 def get_books():
     mydb = mysql.connector.connect(**DB_CONFIG)
@@ -49,7 +49,7 @@ def get_books():
     mydb.close()
     return jsonify(books)
 
-# 首页路由
+# Route
 @app.route('/')
 def index():
     return render_template('index.html')
