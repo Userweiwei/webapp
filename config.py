@@ -1,6 +1,7 @@
+import os
 DB_CONFIG = {
-    'host': '172.30.31.145',
-    'user': 'webapp',
-    'password': 'webappuser',
-    'database': 'webdb'
+    'host': os.getenv('DB_HOST'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'database': os.getenv('DB_NAME')
 }
