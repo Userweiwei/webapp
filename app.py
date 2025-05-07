@@ -5,9 +5,12 @@ import logging
 import logging.config
 import os
 
-config_path = os.path.abspath('logging.conf')
-logging.config.fileConfig(config_path)
-logger = logging.getLogger()
+logger = logging.getLogger("entLogger")
+log_path = os.path.join(os.getcwd(), "logs/")
+if not os.path.exists(log_path):
+    os.makedirs(log_path)
+logging_conf_file = "{0}/logging.conf".format(os.getcwd())
+logging.config.fileConfig(logging_conf_file, defaults={'logfilepath': log_path})
 
 app = Flask(__name__)
 
