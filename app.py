@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 import mysql.connector
 from config import DB_CONFIG
+import logging
 
 app = Flask(__name__)
 
@@ -36,6 +37,7 @@ def add_book():
     book_id = mycursor.lastrowid
     mycursor.close()
     mydb.close()
+    logging.info("Succeed to add one book!")
     return jsonify({"id": book_id, "title": title, "author": author, "description": description}), 201
 
 # Get Book Lists
