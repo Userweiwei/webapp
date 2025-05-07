@@ -3,6 +3,7 @@ import mysql.connector
 from config import DB_CONFIG
 import logging
 import logging.config
+import os
 
 config_path = os.path.abspath('logging.conf')
 logging.config.fileConfig(config_path)
