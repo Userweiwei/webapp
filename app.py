@@ -4,7 +4,7 @@ from config import DB_CONFIG
 import logging
 import logging.config
 
-logging.config.fileConfig('logging.config')
+logging.config.fileConfig('logging.conf')
 logger = logging.getLogger()
 
 app = Flask(__name__)
