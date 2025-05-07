@@ -4,7 +4,8 @@ from config import DB_CONFIG
 import logging
 import logging.config
 
-logging.config.fileConfig('logging.conf')
+config_path = os.path.abspath('logging.conf')
+logging.config.fileConfig(config_path)
 logger = logging.getLogger()
 
 app = Flask(__name__)
