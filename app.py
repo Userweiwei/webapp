@@ -2,15 +2,15 @@ from flask import Flask, jsonify, request, render_template
 import mysql.connector
 from config import DB_CONFIG
 import logging
-import logging.config
 import os
+import logging.config
 
-logger = logging.getLogger("entLogger")
-log_path = os.path.join(os.getcwd(), "logs/")
-if not os.path.exists(log_path):
-    os.makedirs(log_path)
+# Set up logging
+if not os.path.exists('logs'):
+    os.mkdir('logs')
 logging_conf_file = "{0}/logging.conf".format(os.getcwd())
-logging.config.fileConfig(logging_conf_file, defaults={'logfilepath': log_path})
+logging.config.fileConfig(logging_conf_file)
+logging.root = logging.getLogger('DEBUG')
 
 app = Flask(__name__)
 
@@ -46,7 +46,7 @@ def add_book():
     book_id = mycursor.lastrowid
     mycursor.close()
     mydb.close()
-    logger.info("Succeed to add one book!")
+    logging.info("Succeed to add one book!")
     return jsonify({"id": book_id, "title": title, "author": author, "description": description}), 201
 
 # Get Book Lists
@@ -67,5 +67,5 @@ def index():
 
 if __name__ == '__main__':
     create_table()
-    logger.info("Start the webapp!")
+    logging.info("Start the webapp!")
     app.run(debug=True, host='0.0.0.0', port=8080)
