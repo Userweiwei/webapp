@@ -1,0 +1,18 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: webapp-prod
+  namespace: deploy-test
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'webapp-prod:latest'
+  source:
+    type: Git
+    git:
+      ref: main
+      uri: 'https://github.com/Userweiwei/webapp'
+  strategy:
+    type: Docker
+

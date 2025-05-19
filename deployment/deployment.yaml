@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: webapp-prod
+  namespace: deploy-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-prod
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp-prod
+        deployment: webapp-prod
+    spec:
+      containers:
+        - name: webapp
+          image: 'image-registry.openshift-image-registry.svc:5000/deploy-test/webapp:latest'
+          env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: db-config-secret
+                key: DB_HOST
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-config-secret
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-config-secret
+                key: DB_PASSWORD
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: db-config-secret
+                key: DB_NAME
+          volumeMounts:
+          - mountPath: "/app/logs"
+            name: webapp-log-storage
+      volumes:
+        - name: webapp-log-storage
+          persistentVolumeClaim:
+            claimName: webapp-log-pvc
